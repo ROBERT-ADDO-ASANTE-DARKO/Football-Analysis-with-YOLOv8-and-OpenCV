@@ -1,9 +1,11 @@
-from ultralytics import YOLO
+from utils import read_video, save_video
 
-model = YOLO('/teamspace/studios/this_studio/models/best.pt')
+def main():
+    # Read video
+    video_frames = read_video('/teamspace/studios/this_studio/input_video/08fd33_4.mp4')
 
-results = model.predict('/teamspace/studios/this_studio/input_video/08fd33_4.mp4', save=True)
-print(results[0])
-print('###############################################')
-for box in results[0].boxes:
-    print(box)
+    # Save video
+    save_video(video_frames, '/teamspace/studios/this_studio/output_videos/output_video.avi')
+
+if __name__ == '__main__':
+    main()
