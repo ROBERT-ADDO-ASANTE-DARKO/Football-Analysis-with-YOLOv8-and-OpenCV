@@ -11,6 +11,7 @@ def read_video(video_path):
     return frames
 
 def save_video(output_video_frames, output_video_path):
+    print(f"Saving video to {output_video_path} with {len(output_video_frames)} frames.")
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     out = cv2.VideoWriter(output_video_path, fourcc, 24, (output_video_frames[0].shape[1], output_video_frames[0].shape[0]))
     for frame in output_video_frames:
