@@ -7,7 +7,7 @@ def main():
 
     # Initialize Tracker
     tracker = Tracker('/teamspace/studios/this_studio/models/best.pt')
-    tracks = tracker.get_object_tracks(video_frames)
+    tracks = tracker.get_object_tracks(video_frames, read_from_stub=True, stub_path='/teamspace/studios/this_studio/stubs/track_stubs.pkl')
 
     # Save video
     save_video(video_frames, '/teamspace/studios/this_studio/output_videos/output_video.avi')
