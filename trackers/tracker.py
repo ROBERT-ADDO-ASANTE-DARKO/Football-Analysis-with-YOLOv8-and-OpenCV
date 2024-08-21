@@ -3,6 +3,7 @@ import supervision as sv
 import pickle as pkl
 import cv2
 import numpy as np
+import pandas as pd
 import os
 import sys
 sys.path.append('../')
@@ -12,6 +13,18 @@ class Tracker:
     def __init__(self, model_path):
         self.model = YOLO(model_path)
         self.tracker = sv.ByteTrack()
+
+    def interpolate_ball_positions(self, ball_positions):
+        ball_positions = [x.get(1, {}).get('bbox', []) for x in ball_positions]
+        df_ball_positions = pd.DataFrame(ball_positions, columns=['x1', 'y1', 'x2', 'y2'])
+
+        # Interpolate missing values
+        df_ball_positions = df_ball_positions.interpolate()
+        df_ball_positions = df_ball_positions.bfill()
+
+        ball_positions = [{1: {"bbox": x}} for x in df_ball_positions.to_numpy().tolist()]
+
+        return ball_positions
 
     def detect_frames(self, frames):
         batch_size = 20

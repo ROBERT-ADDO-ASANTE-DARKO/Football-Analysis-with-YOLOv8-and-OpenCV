@@ -11,6 +11,9 @@ def main():
     tracker = Tracker('/teamspace/studios/this_studio/models/best.pt')
     tracks = tracker.get_object_tracks(video_frames, read_from_stub=True, stub_path='/teamspace/studios/this_studio/stubs/track_stubs.pkl')
 
+    # Interpolate ball positions
+    tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
+
     # Assign Player Teams
     team_assigner = TeamAssigner()
     team_assigner.assign_team_color(video_frames[0], tracks['players'][0])
