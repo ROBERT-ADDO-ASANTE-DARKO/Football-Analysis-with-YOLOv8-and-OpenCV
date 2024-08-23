@@ -158,7 +158,17 @@ class Tracker:
 
         return frame
 
-    def draw_annotations(self, video_frames, tracks):
+    def draw_team_ball_control(self, frame, frame_num, team_ball_control):
+        # Draw a semi-transparent rectangle
+        overlay = frame.copy()
+        cv2.rectangle(overlay, (1350, 850), (1900, 970), (255, 255, 255), -1)
+        alpha = 0.4
+        cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
+
+        team_ball_control_till_frame = team_ball_control[:frame_num+1]
+        # Get the number of times each team had ball control
+
+    def draw_annotations(self, video_frames, tracks, team_ball_control):
         output_video_frames = []
         for frame_num, frame in enumerate(video_frames):
             frame = frame.copy()
@@ -172,6 +182,9 @@ class Tracker:
                 color = player.get("team_color", (0, 0, 255))
                 frame = self.draw_ellipse(frame, player['bbox'], color, track_id)
 
+                if player.get('has_ball', False):
+                    frame = self.draw_triangle(frame, player['bbox'], (0, 0, 255))
+
             # Draw Referee
             for track_id, referee in referee_dict.items():
                 frame = self.draw_ellipse(frame, referee['bbox'], (0,255,255))
@@ -180,6 +193,9 @@ class Tracker:
             # Draw Ball
             for track_id, ball in ball_dict.items():
                 frame = self.draw_triangle(frame, ball['bbox'], (0, 255, 0))
+
+            # Draw team ball control
+            frame = self.draw_team_ball_control(frame, frame_num, team_ball_control)
 
             cv2.imwrite(f'/teamspace/studios/this_studio/output_videos/debug_frames/debug_frame_{frame_num}.jpg', frame)
 
