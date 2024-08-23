@@ -1,6 +1,7 @@
 from utils import read_video, save_video
 from trackers import Tracker
 import cv2
+import numpy as np
 from team_assigner import TeamAssigner
 from player_ball_assigner import PlayerBallAssigner
 
@@ -37,6 +38,7 @@ def main():
             team_ball_control.append(tracks['players'][frame_num][assigned_player]['team'])
         else:
             team_ball_control.append(team_ball_control[-1])
+    team_ball_control = np.array(team_ball_control)
 
     # Save cropped image of a player
     '''
