@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 from team_assigner import TeamAssigner
 from player_ball_assigner import PlayerBallAssigner
+from camera_movement_estimator import CameraMovementEstimator
 
 def main():
     # Read video
@@ -12,6 +13,15 @@ def main():
     # Initialize Tracker
     tracker = Tracker('/teamspace/studios/this_studio/models/best.pt')
     tracks = tracker.get_object_tracks(video_frames, read_from_stub=True, stub_path='/teamspace/studios/this_studio/stubs/track_stubs.pkl')
+
+    # Get object positions
+    tracker.add_position_to_tracks(tracks)
+
+    # camera movement estimator
+    camera_movement_estimator = CameraMovementEstimator(video_frames[0])
+    camera_movement_per_frame = camera_movement_estimator.get_camera_movement(video_frames,
+                                                                                read_from_stub=True,
+                                                                                stub_path='/teamspace/studios/this_studio/stubs/camera_movement_stub.pkl')
 
     # Interpolate ball positions
     tracks["ball"] = tracker.interpolate_ball_positions(tracks["ball"])
@@ -40,22 +50,11 @@ def main():
             team_ball_control.append(team_ball_control[-1])
     team_ball_control = np.array(team_ball_control)
 
-    # Save cropped image of a player
-    '''
-    for track_id, player in tracks['players'][0].items():
-        bbox = player['bbox']
-        frame = video_frames[0]
-
-        # Crop bbox from frame
-        cropped_image = frame[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])]
-
-        # Save the cropped image
-        cv2.imwrite(f'/teamspace/studios/this_studio/output_videos/crooped_image.jpg', cropped_image)
-        break
-    '''
-
     # Draw object tracks
     output_video_frames = tracker.draw_annotations(video_frames, tracks, team_ball_control)
+
+    # Draw camera movement
+    output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames,camera_movement_per_frame)
 
     # Save video
     save_video(output_video_frames, '/teamspace/studios/this_studio/output_videos/output_video.avi')
