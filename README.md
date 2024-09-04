@@ -45,7 +45,7 @@ This project is a football analytics pipeline that takes a video of a football m
 ## File Structure
 
 ```plaintext
-football-analytics-pipeline/
+Football-Analysis-with-YOLOv5-and-OpenCV/
 ├── main.py                      # Main script
 ├── utils.py                     # Utility functions
 ├── trackers.py                  # Object tracking module
