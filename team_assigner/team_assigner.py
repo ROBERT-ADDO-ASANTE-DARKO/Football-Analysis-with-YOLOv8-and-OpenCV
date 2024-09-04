@@ -71,6 +71,9 @@ class TeamAssigner:
         elif player_id == 81:
             team_id=1
 
+        elif player_id == 34:
+            team_id=2
+
         self.player_team_dict[player_id] = team_id
 
         return team_id
