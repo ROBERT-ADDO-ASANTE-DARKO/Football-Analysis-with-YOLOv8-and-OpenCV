@@ -22,7 +22,7 @@ This project is a football analytics pipeline that takes a video of a football m
 
 1. **Clone the repository:**
     ```bash
-    git https://github.com/ROBERT-ADDO-ASANTE-DARKO/Football-Analysis-with-YOLOv5-and-OpenCV.git
+    git https://github.com/ROBERT-ADDO-ASANTE-DARKO/Football-Analysis-with-YOLOv8-and-OpenCV.git
     ```
 2. **Navigate to the project directory:**
     ```bash
