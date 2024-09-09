@@ -26,7 +26,7 @@ This project is a football analytics pipeline that takes a video of a football m
     ```
 2. **Navigate to the project directory:**
     ```bash
-    cd Football-Analysis-with-YOLOv5-and-OpenCV
+    cd Football-Analysis-with-YOLOv8-and-OpenCV
     ```
 3. **Install the required packages:**
     ```bash
