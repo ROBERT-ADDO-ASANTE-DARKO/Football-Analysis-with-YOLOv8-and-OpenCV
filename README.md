@@ -2,6 +2,10 @@
 
 This project is a football analytics pipeline that takes a video of a football match as input and outputs a video with various analytics features, including player tracking, team assignment, ball possession, speed and distance estimation, and camera movement estimation.
 
+
+https://github.com/user-attachments/assets/81fc23f4-4c6c-43c5-a233-a8319e053f2f
+
+
 ## Features
 
 - **Player Tracking**: Tracks the movement of each player on the field.
